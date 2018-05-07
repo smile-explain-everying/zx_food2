@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.mapper.ExpenditureMapper">
+  <resultMap id="BaseResultMap" type="com.example.bean.Expenditure">
+    <id column="expenditure_id" jdbcType="INTEGER" property="id" />
+    <result column="expenditure_amount" jdbcType="DECIMAL" property="amount" />
+    <result column="expenditure_date" jdbcType="TIMESTAMP" property="date" />
+    <result column="expenditure_material_name" jdbcType="VARCHAR" property="materialName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    expenditure.id as expenditure_id, expenditure.amount as expenditure_amount, expenditure.date as expenditure_date, 
+    expenditure.material_name as expenditure_material_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from expenditure expenditure
+    where expenditure.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from expenditure
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.bean.Expenditure">
+    insert into expenditure (id, amount, date, 
+      material_name)
+    values (#{id,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{date,jdbcType=TIMESTAMP}, 
+      #{materialName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.bean.Expenditure">
+    insert into expenditure
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="materialName != null">
+        material_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="materialName != null">
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.bean.Expenditure">
+    update expenditure
+    <set>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="materialName != null">
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.bean.Expenditure">
+    update expenditure
+    set amount = #{amount,jdbcType=DECIMAL},
+      date = #{date,jdbcType=TIMESTAMP},
+      material_name = #{materialName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

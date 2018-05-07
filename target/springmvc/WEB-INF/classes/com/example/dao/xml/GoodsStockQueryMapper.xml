@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.mapper.GoodsStockQueryMapper">
+  <select id="query" resultType="com.example.bean.GoodsStock">
+    select id, goods_name as goodsName, goods_quantity as goodsQuantity, material_unit as materialUnit, material_price as materialPrice from goods_stock
+    ORDER BY goodsQuantity, id asc limit  #{first,jdbcType=INTEGER},10
+  </select>
+  <select id="queryAllList" resultType="com.example.bean.GoodsStock">
+    select id, goods_name as goodsName, goods_quantity as goodsQuantity, material_unit as materialUnit, material_price as materialPrice from goods_stock
+    ORDER BY goodsQuantity, id asc
+  </select>
+</mapper>

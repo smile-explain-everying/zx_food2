@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.mapper.GoodsStockMapper">
+  <resultMap id="BaseResultMap" type="com.example.bean.GoodsStock">
+    <id column="goodsStock_id" jdbcType="INTEGER" property="id" />
+    <result column="goodsStock_goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goodsStock_goods_quantity" jdbcType="INTEGER" property="goodsQuantity" />
+    <result column="goodsStock_material_unit" jdbcType="VARCHAR" property="materialUnit" />
+    <result column="goodsStock_material_price" jdbcType="DECIMAL" property="materialPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goodsStock.id as goodsStock_id, goodsStock.goods_name as goodsStock_goods_name, goodsStock.goods_quantity as goodsStock_goods_quantity, 
+    goodsStock.material_unit as goodsStock_material_unit, goodsStock.material_price as goodsStock_material_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods_stock goodsStock
+    where goodsStock.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods_stock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.bean.GoodsStock">
+    insert into goods_stock (id, goods_name, goods_quantity, 
+      material_unit, material_price)
+    values (#{id,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsQuantity,jdbcType=INTEGER}, 
+      #{materialUnit,jdbcType=VARCHAR}, #{materialPrice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.bean.GoodsStock">
+    insert into goods_stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsQuantity != null">
+        goods_quantity,
+      </if>
+      <if test="materialUnit != null">
+        material_unit,
+      </if>
+      <if test="materialPrice != null">
+        material_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsQuantity != null">
+        #{goodsQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="materialUnit != null">
+        #{materialUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="materialPrice != null">
+        #{materialPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.bean.GoodsStock">
+    update goods_stock
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsQuantity != null">
+        goods_quantity = #{goodsQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="materialUnit != null">
+        material_unit = #{materialUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="materialPrice != null">
+        material_price = #{materialPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.bean.GoodsStock">
+    update goods_stock
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_quantity = #{goodsQuantity,jdbcType=INTEGER},
+      material_unit = #{materialUnit,jdbcType=VARCHAR},
+      material_price = #{materialPrice,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.mapper.MaterialStockMapper">
+  <resultMap id="BaseResultMap" type="com.example.bean.MaterialStock">
+    <id column="materialStock_id" jdbcType="INTEGER" property="id" />
+    <result column="materialStock_material_name" jdbcType="VARCHAR" property="materialName" />
+    <result column="materialStock_material_quantity" jdbcType="INTEGER" property="materialQuantity" />
+    <result column="materialStock_material_unit" jdbcType="VARCHAR" property="materialUnit" />
+    <result column="materialStock_material_price" jdbcType="DECIMAL" property="materialPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    materialStock.id as materialStock_id, materialStock.material_name as materialStock_material_name, 
+    materialStock.material_quantity as materialStock_material_quantity, materialStock.material_unit as materialStock_material_unit, 
+    materialStock.material_price as materialStock_material_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from material_stock materialStock
+    where materialStock.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from material_stock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.bean.MaterialStock">
+    insert into material_stock (id, material_name, material_quantity, 
+      material_unit, material_price)
+    values (#{id,jdbcType=INTEGER}, #{materialName,jdbcType=VARCHAR}, #{materialQuantity,jdbcType=INTEGER}, 
+      #{materialUnit,jdbcType=VARCHAR}, #{materialPrice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.bean.MaterialStock">
+    insert into material_stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="materialName != null">
+        material_name,
+      </if>
+      <if test="materialQuantity != null">
+        material_quantity,
+      </if>
+      <if test="materialUnit != null">
+        material_unit,
+      </if>
+      <if test="materialPrice != null">
+        material_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="materialName != null">
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialQuantity != null">
+        #{materialQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="materialUnit != null">
+        #{materialUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="materialPrice != null">
+        #{materialPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.bean.MaterialStock">
+    update material_stock
+    <set>
+      <if test="materialName != null">
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialQuantity != null">
+        material_quantity = #{materialQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="materialUnit != null">
+        material_unit = #{materialUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="materialPrice != null">
+        material_price = #{materialPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.bean.MaterialStock">
+    update material_stock
+    set material_name = #{materialName,jdbcType=VARCHAR},
+      material_quantity = #{materialQuantity,jdbcType=INTEGER},
+      material_unit = #{materialUnit,jdbcType=VARCHAR},
+      material_price = #{materialPrice,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
